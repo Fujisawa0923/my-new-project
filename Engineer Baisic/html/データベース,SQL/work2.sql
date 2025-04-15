@@ -7,8 +7,8 @@ localhost/twitter/tweets/		http://localhost/phpmyadmin/index.php?route=/table/sq
 
 
 SELECT tweets.*FROM users
-JOIN tweets ON users.id = tweets.user_id
-WHERE users.first_name = 'John'
+JOIN tweets ON users.id = tweets.user_id -- ユーザーとツイートを、ユーザーIDで結合
+WHERE users.first_name = 'John' -- 名前が「John Doe」のユーザーに絞り込む
   AND users.last_name = 'Doe';
 
 

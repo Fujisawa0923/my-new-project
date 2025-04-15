@@ -6,8 +6,8 @@ localhost/twitter/users/		http://localhost/phpmyadmin/index.php?route=/table/sql
 
 SELECT users.first_name, users.last_name
 FROM users
-LEFT JOIN replys ON users.id = replys.user_id
-WHERE replys.user_id IS NULL;
+LEFT JOIN replys ON users.id = replys.user_id -- すべてのユーザーに対して、該当するリプライがあれば結びつける（なければNULL）
+WHERE replys.user_id IS NULL; -- リプライを1つもしていないユーザーだけを抽出
 
 
 first_name	last_name	
