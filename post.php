@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Tokyo'); 
 require 'db.php';
 
 // 削除処理
@@ -32,12 +33,17 @@ if (isset($_POST['btn_submit'])) {
         }
     }
 }
+
+// 投稿一覧取得
+$stmt = $pdo->query("SELECT * FROM message_board ORDER BY post_date DESC");
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="utf-8">
 <title>掲示板</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <h1>掲示板</h1>
@@ -45,7 +51,7 @@ if (isset($_POST['btn_submit'])) {
 <!-- 投稿フォーム -->
 <form method="post">
   <div>
-    <label for="view_name">表示名</label>
+    <label for="view_name">投稿者</label>
     <input id="view_name" type="text" name="view_name" value="">
   </div>
   <div>
@@ -61,10 +67,9 @@ if (isset($_POST['btn_submit'])) {
 
 <hr>
 
-<!-- 投稿表示＆削除ボタン -->
+<!-- 投稿一覧 -->
 <section>
 <?php
-$stmt = $pdo->query("SELECT * FROM message_board ORDER BY post_date DESC");
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo '<article>';
     echo '<div class="info">';
@@ -73,7 +78,13 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     echo '</div>';
     echo '<p>' . nl2br(htmlspecialchars($row['message'], ENT_QUOTES, 'UTF-8')) . '</p>';
     
-    // 削除フォーム（投稿ごとに）
+    // 「コメントを見る」ボタン
+    echo '<form action="comments.php" method="get">';
+    echo '<input type="hidden" name="id" value="' . $row['id'] . '">';
+    echo '<input type="submit" value="コメントを見る">';
+    echo '</form>';
+    
+    // 削除ボタン
     echo '<form method="post" onsubmit="return confirm(\'本当に削除しますか？\');">';
     echo '<input type="hidden" name="delete_id" value="' . $row['id'] . '">';
     echo '<input type="submit" name="btn_delete" value="削除">';

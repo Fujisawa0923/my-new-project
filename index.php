@@ -31,7 +31,7 @@ if (!empty($_POST['btn_submit'])) {
 <h1>掲示板</h1>
 <form method="post">
   <div>
-    <label for="view_name">表示名</label>
+    <label for="view_name">投稿者</label>
     <input id="view_name" type="text" name="view_name" value="">
   </div>
   <div>
